@@ -1,3 +1,3 @@
 # EmployeeCrud
 
-# This WPF windows application for managing employee details
+# This is a WPF windows application for managing employee details
