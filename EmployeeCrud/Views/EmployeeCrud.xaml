@@ -1,0 +1,53 @@
+﻿<Window x:Class="EmployeeCrud.Views.EmployeeCrud"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EmployeeCrud.Views"
+        mc:Ignorable="d"
+        Title="EmployeeCrud" Height="450" Width="1200">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="103*"/>
+            <ColumnDefinition Width="497*"/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="lblName" Content="Name :" HorizontalAlignment="Left" Margin="12,50,0,0" VerticalAlignment="Top" Width="50"/>
+        <Label x:Name="lblEmail" Content="Email :" HorizontalAlignment="Left" Margin="13,81,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.04,0.416" Width="49"/>
+        <Label x:Name="lblGender" Content="Gender :" HorizontalAlignment="Left" Margin="13,117,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.224,0.387" Width="58" Height="26"/>
+        <Label x:Name="lblStatus" Content="Status :" HorizontalAlignment="Left" Margin="13,148,0,0" VerticalAlignment="Top" Width="49" Height="23" RenderTransformOrigin="-0.138,1.363"/>
+        <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="70,58,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.109,-0.123"/>
+        <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Margin="70,89,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtGender" HorizontalAlignment="Left" Margin="70,121,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.496,0.549"/>
+        <TextBox x:Name="txtStatus" HorizontalAlignment="Left" Margin="70,148,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtEmployeeId" Visibility="Hidden" HorizontalAlignment="Left" Margin="70,35,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.559,0.66" />
+        <Button x:Name="btnSaveEmployee" Content="Save Employee" HorizontalAlignment="Left" Margin="70,178,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.556,-0.025" Width="120" Click="btnSaveEmployee_Click"/>
+        <DataGrid x:Name="dgEmployee" Height="NaN" Margin="11,58,10,29" Width="NaN"
+                  xmlns:my="http://schemas.microsoft.com/wpf/2008/toolkit"
+                  CanUserAddRows="True"
+                  ItemsSource="{Binding}"
+                  AutoGenerateColumns="False" Grid.Column="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Employee Id" Binding="{Binding Path=Id}"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Path=Email}"/>
+                <DataGridTextColumn Header="Gender" Binding="{Binding Path=Gender}"/>
+                <DataGridTextColumn Header="Status" Binding="{Binding Path=Status}"/>
+                <DataGridTemplateColumn Header="Edit Action">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="btnEditEmployee">Edit</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Delete Action">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="btnDeleteEmployee">Delete</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label x:Name="lblMessage" Content="" HorizontalAlignment="Left" Margin="13,232,0,0" VerticalAlignment="Top" Width="177"/>
+    </Grid>
+</Window>
