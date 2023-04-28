@@ -23,9 +23,9 @@
         <Button x:Name="btnSaveEmployee" Content="Save Employee" HorizontalAlignment="Left" Margin="70,178,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.556,-0.025" Width="120" Click="btnSaveEmployee_Click"/>
         <DataGrid x:Name="dgEmployee" Height="NaN" Margin="11,58,10,29" Width="NaN"
                   xmlns:my="http://schemas.microsoft.com/wpf/2008/toolkit"
-                  CanUserAddRows="True"
+                  CanUserAddRows="False"
                   ItemsSource="{Binding}"
-                  AutoGenerateColumns="False" Grid.Column="1">
+                  AutoGenerateColumns="False" Grid.Column="1" IsReadOnly="True" ColumnWidth="*">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Employee Id" Binding="{Binding Path=Id}"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}"/>
