@@ -6,10 +6,10 @@ In this WPF winform Application we have implemented following Crud Functionaliti
 Below is the screenshot for application user interface.
 ![image](https://user-images.githubusercontent.com/55030315/234369690-fbde0184-3e93-4cd0-9241-22007a38f510.png)
 
-Create - we can able to create employee details by using save employe button.
+Create - we can able to create employee details by using save employe button and all the field are mandatory to save.
 
-View - While initial load of window we will get the employee details and display in grid and every Add, Edit, Remove operation Employee details will refresh.
+View - While initial load of window we will get the employee details and display in grid and every CRUD like Add, Edit, Remove operation Employee details will refresh.
 
-Edit - Each column of Employee details grid will have edit option button.
+Edit - Each Row of Employee details grid will have edit option button.
 
-Remove - Each column of Employee details grid will have Delete option button.
+Remove - Each Row of Employee details grid will have Delete option button.
