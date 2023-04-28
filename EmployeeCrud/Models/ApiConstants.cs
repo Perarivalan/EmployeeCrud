@@ -6,12 +6,25 @@ using System.Threading.Tasks;
 
 namespace EmployeeCrud.Models
 {
-    public static class ApiConstants
+    public class ApiConstants
     {
-        public const string ApiUrl = "https://gorest.co.in/public/v2/";
+        private const string ApiUrl = "https://gorest.co.in/public/v2/";
 
-        public const string API = "Users/";
+        private const string ApiToken = "fa114107311259f5f33e70a5d85de34a2499b4401da069af0b1d835cd5ec0d56";
 
-        public const string ApiToken = "fa114107311259f5f33e70a5d85de34a2499b4401da069af0b1d835cd5ec0d56";
+        public string GetApiUrl
+        {
+            get
+            {
+                return ApiUrl;
+            }
+        }
+        public string GetApiToken
+        {
+            get
+            {
+                return ApiToken;
+            }
+        }
     }
 }

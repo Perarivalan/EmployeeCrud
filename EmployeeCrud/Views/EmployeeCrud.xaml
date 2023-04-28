@@ -15,10 +15,10 @@
         <Label x:Name="lblEmail" Content="Email :" HorizontalAlignment="Left" Margin="13,81,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.04,0.416" Width="49"/>
         <Label x:Name="lblGender" Content="Gender :" HorizontalAlignment="Left" Margin="13,117,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.224,0.387" Width="58" Height="26"/>
         <Label x:Name="lblStatus" Content="Status :" HorizontalAlignment="Left" Margin="13,148,0,0" VerticalAlignment="Top" Width="49" Height="23" RenderTransformOrigin="-0.138,1.363"/>
-        <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="70,58,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.109,-0.123"/>
-        <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Margin="70,89,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="txtGender" HorizontalAlignment="Left" Margin="70,121,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.496,0.549"/>
-        <TextBox x:Name="txtStatus" HorizontalAlignment="Left" Margin="70,148,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="70,58,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.109,-0.123" AutomationProperties.IsRequiredForForm="True"/>
+        <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Margin="70,89,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" AutomationProperties.IsRequiredForForm="True"/>
+        <TextBox x:Name="txtGender" HorizontalAlignment="Left" Margin="70,121,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.496,0.549" AutomationProperties.IsRequiredForForm="True"/>
+        <TextBox x:Name="txtStatus" HorizontalAlignment="Left" Margin="70,148,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" AutomationProperties.IsRequiredForForm="True"/>
         <TextBox x:Name="txtEmployeeId" Visibility="Hidden" HorizontalAlignment="Left" Margin="70,35,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.559,0.66" />
         <Button x:Name="btnSaveEmployee" Content="Save Employee" HorizontalAlignment="Left" Margin="70,178,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.556,-0.025" Width="120" Click="btnSaveEmployee_Click"/>
         <DataGrid x:Name="dgEmployee" Height="NaN" Margin="11,58,10,29" Width="NaN"

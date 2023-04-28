@@ -1,4 +1,5 @@
 ﻿using EmployeeCrud.Models;
+using EmployeeCrud.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -27,10 +28,11 @@ namespace EmployeeCrud.Views
         HttpClient client = new HttpClient();
         public EmployeeCrud()
         {
-            client.BaseAddress = new Uri(ApiConstants.ApiUrl);
+            ApiConstants apiConstants = new ApiConstants(); 
+            client.BaseAddress = new Uri(apiConstants.GetApiUrl);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", ApiConstants.ApiToken);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiConstants.GetApiToken);
             InitializeComponent();
             this.GetEmployees();
         }
@@ -40,7 +42,8 @@ namespace EmployeeCrud.Views
             try
             {
                 lblMessage.Content = "";
-                var response = await client.GetStringAsync("users");
+                EmployeeDetailsAPI employeeDetails = new EmployeeDetailsAPI();
+                var response = await employeeDetails.GetCall("users");
                 var employee = JsonConvert.DeserializeObject<List<Employee>>(response);
                 dgEmployee.DataContext = employee;
             }
@@ -54,18 +57,9 @@ namespace EmployeeCrud.Views
         {
             try
             {
-                JsonObject requestParams = new JsonObject
-                {
-                    { "name", employee.Name },
-                    { "email", employee.Email },
-                    { "gender", employee.Gender },
-                    { "status", employee.Status }
-                };
-                var jsonData = System.Text.Json.JsonSerializer.Serialize(requestParams);
-                var buffer = Encoding.UTF8.GetBytes(jsonData);
-                var byteContent = new ByteArrayContent(buffer);
-                byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                await client.PostAsync("users/", byteContent);
+
+                EmployeeDetailsAPI employeeDetails = new EmployeeDetailsAPI();
+                var response = await employeeDetails.PostandPutCall(employee);
                 this.GetEmployees();
             }
             catch (Exception ex)
@@ -78,18 +72,9 @@ namespace EmployeeCrud.Views
         {
             try
             {
-                JsonObject requestParams = new JsonObject
-                {
-                    { "name", employee.Name },
-                    { "email", employee.Email },
-                    { "gender", employee.Gender },
-                    { "status", employee.Status }
-                };
-                var jsonData = System.Text.Json.JsonSerializer.Serialize(requestParams);
-                var buffer = Encoding.UTF8.GetBytes(jsonData);
-                var byteContent = new ByteArrayContent(buffer);
-                byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                await client.PutAsync("users/" + employee.Id, byteContent);
+
+                EmployeeDetailsAPI employeeDetails = new EmployeeDetailsAPI();
+                var response = await employeeDetails.PostandPutCall(employee);
                 this.GetEmployees();
             }
             catch (Exception ex)
@@ -102,7 +87,9 @@ namespace EmployeeCrud.Views
         {
             try
             {
-                await client.DeleteAsync("users/" + employeeId);
+
+                EmployeeDetailsAPI employeeDetails = new EmployeeDetailsAPI();
+                var response = await employeeDetails.DeleteCall(employeeId);
             }
             catch (Exception ex)
             {
@@ -118,24 +105,31 @@ namespace EmployeeCrud.Views
         {
             try
             {
-                var employee = new Employee()
+                if (!string.IsNullOrEmpty(txtName.Text) && !string.IsNullOrEmpty(txtEmail.Text) && !string.IsNullOrEmpty(txtGender.Text) && !string.IsNullOrEmpty(txtStatus.Text)) 
                 {
-                    Id = Convert.ToInt32(txtEmployeeId.Text),
-                    Name = txtName.Text,
-                    Email = txtEmail.Text,
-                    Gender = txtGender.Text,
-                    Status = txtStatus.Text
-                };
+                    var employee = new Employee()
+                    {
+                        Id = Convert.ToInt32(txtEmployeeId.Text),
+                        Name = txtName.Text,
+                        Email = txtEmail.Text,
+                        Gender = txtGender.Text,
+                        Status = txtStatus.Text
+                    };
 
-                if (employee.Id == 0)
-                {
-                    this.SaveEmployee(employee);
-                    lblMessage.Content = "Employee Saved";
+                    if (employee.Id == 0)
+                    {
+                        this.SaveEmployee(employee);
+                        lblMessage.Content = "Employee Saved";
+                    }
+                    else
+                    {
+                        this.UpdateEmployee(employee);
+                        lblMessage.Content = "Employee Updated";
+                    }
                 }
                 else
                 {
-                    this.UpdateEmployee(employee);
-                    lblMessage.Content = "Employee Updated";
+                    lblMessage.Content = "All fields are Mandatory to save";
                 }
             }
             catch (Exception ex)
