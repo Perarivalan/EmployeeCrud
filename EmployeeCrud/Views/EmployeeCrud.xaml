@@ -48,6 +48,6 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Label x:Name="lblMessage" Content="" HorizontalAlignment="Left" Margin="13,232,0,0" VerticalAlignment="Top" Width="177"/>
+        <TextBlock x:Name="txtMessage" HorizontalAlignment="Center" Margin="0,250,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="180" Height="29" RenderTransformOrigin="0.535,-1.363"/>
     </Grid>
 </Window>

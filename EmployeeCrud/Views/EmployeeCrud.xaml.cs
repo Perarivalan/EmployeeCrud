@@ -1,6 +1,8 @@
 ﻿using EmployeeCrud.Models;
 using EmployeeCrud.Services;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using NUnit.Framework.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +10,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -41,7 +44,7 @@ namespace EmployeeCrud.Views
         {
             try
             {
-                lblMessage.Content = "";
+                txtMessage.Text = "";
                 EmployeeDetailsAPI employeeDetails = new EmployeeDetailsAPI();
                 var response = await employeeDetails.GetCall("users");
                 var employee = JsonConvert.DeserializeObject<List<Employee>>(response);
@@ -49,7 +52,7 @@ namespace EmployeeCrud.Views
             }
             catch (Exception ex)
             {
-                lblMessage.Content = ex.Message;
+                txtMessage.Text = ex.Message;
             }
         }
 
@@ -64,7 +67,7 @@ namespace EmployeeCrud.Views
             }
             catch (Exception ex)
             {
-                lblMessage.Content = ex.Message;
+                txtMessage.Text = ex.Message;
             }
         }
 
@@ -79,7 +82,7 @@ namespace EmployeeCrud.Views
             }
             catch (Exception ex)
             {
-                lblMessage.Content = ex.Message;
+                txtMessage.Text = ex.Message;
             }
         }
 
@@ -93,7 +96,7 @@ namespace EmployeeCrud.Views
             }
             catch (Exception ex)
             {
-                lblMessage.Content = ex.Message;
+                txtMessage.Text = ex.Message;
             }
             finally
             {
@@ -107,34 +110,41 @@ namespace EmployeeCrud.Views
             {
                 if (!string.IsNullOrEmpty(txtName.Text) && !string.IsNullOrEmpty(txtEmail.Text) && !string.IsNullOrEmpty(txtGender.Text) && !string.IsNullOrEmpty(txtStatus.Text)) 
                 {
-                    var employee = new Employee()
+                    if (ValidateRule(txtName.Text, txtEmail.Text, txtGender.Text, txtStatus.Text))
                     {
-                        Id = Convert.ToInt32(txtEmployeeId.Text),
-                        Name = txtName.Text,
-                        Email = txtEmail.Text,
-                        Gender = txtGender.Text,
-                        Status = txtStatus.Text
-                    };
+                        var employee = new Employee()
+                        {
+                            Id = Convert.ToInt32(txtEmployeeId.Text),
+                            Name = txtName.Text,
+                            Email = txtEmail.Text,
+                            Gender = txtGender.Text,
+                            Status = txtStatus.Text
+                        };
 
-                    if (employee.Id == 0)
-                    {
-                        this.SaveEmployee(employee);
-                        lblMessage.Content = "Employee Saved";
+                        if (employee.Id == 0)
+                        {
+                            this.SaveEmployee(employee);
+                            txtMessage.Text = "Employee Saved";
+                        }
+                        else
+                        {
+                            this.UpdateEmployee(employee);
+                            txtMessage.Text = "Employee Updated";
+                        }
                     }
                     else
                     {
-                        this.UpdateEmployee(employee);
-                        lblMessage.Content = "Employee Updated";
+                        txtMessage.Text = "Please enter valid Username, Email, Gender and Status to save.";
                     }
                 }
                 else
                 {
-                    lblMessage.Content = "All fields are Mandatory to save";
+                    txtMessage.Text = "All fields are Mandatory to save.";
                 }
             }
             catch (Exception ex)
             {
-                lblMessage.Content = ex.Message;
+                txtMessage.Text = ex.Message;
             }
             finally
             {
@@ -160,7 +170,7 @@ namespace EmployeeCrud.Views
             }
             catch (Exception ex)
             {
-                lblMessage.Content = ex.Message;
+                txtMessage.Text = ex.Message;
             }
         }
         public void btnDeleteEmployee(object sender, RoutedEventArgs e)
@@ -172,9 +182,24 @@ namespace EmployeeCrud.Views
             }
             catch (Exception ex)
             {
-                lblMessage.Content = ex.Message;
+                txtMessage.Text = ex.Message;
             }
         }
 
+        public bool ValidateRule(string User, string Email, string Gender, string Status)
+        {
+            Regex regexUser = new Regex(@"^[A-Za-z0-9 !@#$%^&]{3,25}$");
+            Regex regexEmail = new Regex(@"^[a-z0-9][-a-z0-9._]+@([-a-z0-9]+.)+[a-z]{2,5}$");
+            Regex regexGender = new Regex(@"^[A-Za-z0-9!@#$%^&]{4,6}$");
+            Regex regexStatus = new Regex(@"^[A-Za-z0-9!@#$%^&]{6,8}$");
+            if (!regexUser.IsMatch(User) || !regexEmail.IsMatch(Email) || !regexGender.IsMatch(Gender) || !regexStatus.IsMatch(Status))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 }
