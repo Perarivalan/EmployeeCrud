@@ -19,7 +19,7 @@
         <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Margin="70,89,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" AutomationProperties.IsRequiredForForm="True"/>
         <TextBox x:Name="txtGender" HorizontalAlignment="Left" Margin="70,121,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.496,0.549" AutomationProperties.IsRequiredForForm="True"/>
         <TextBox x:Name="txtStatus" HorizontalAlignment="Left" Margin="70,148,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" AutomationProperties.IsRequiredForForm="True"/>
-        <TextBox x:Name="txtEmployeeId" Visibility="Hidden" HorizontalAlignment="Left" Margin="70,35,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.559,0.66" />
+        <TextBox x:Name="txtEmployeeId" Visibility="Hidden" HorizontalAlignment="Left" Margin="70,35,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.559,0.66" />
         <Button x:Name="btnSaveEmployee" Content="Save Employee" HorizontalAlignment="Left" Margin="70,178,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.556,-0.025" Width="120" Click="btnSaveEmployee_Click"/>
         <DataGrid x:Name="dgEmployee" Height="NaN" Margin="11,58,10,29" Width="NaN"
                   xmlns:my="http://schemas.microsoft.com/wpf/2008/toolkit"

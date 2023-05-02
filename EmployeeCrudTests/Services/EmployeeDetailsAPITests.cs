@@ -34,7 +34,7 @@ namespace EmployeeCrud.Services.Tests
         {
             // Arrange
             EmployeeDetailsAPI employeeDetails = new EmployeeDetailsAPI();
-            var Employee = new Employee { Id = 0, Name = "anandtest", Email = "anandtest@gmail.com", Gender = "male", Status = "active" };
+            var Employee = new Employee { Id = 0, Name = "perarivalan", Email = "perarivalan@gmail.com", Gender = "male", Status = "active" };
             // Act
             var response = await employeeDetails.PostandPutCall(Employee);
             // Assert
