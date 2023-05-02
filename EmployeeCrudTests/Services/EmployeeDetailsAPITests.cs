@@ -34,7 +34,8 @@ namespace EmployeeCrud.Services.Tests
         {
             // Arrange
             EmployeeDetailsAPI employeeDetails = new EmployeeDetailsAPI();
-            var Employee = new Employee { Id = 0, Name = "perarivalan", Email = "perarivalan@gmail.com", Gender = "male", Status = "active" };
+            var mockEmail = GenerateRandomEmail();
+            var Employee = new Employee { Id = 0, Name = "Testdata", Email = mockEmail, Gender = "male", Status = "active" };
             // Act
             var response = await employeeDetails.PostandPutCall(Employee);
             // Assert
@@ -95,6 +96,28 @@ namespace EmployeeCrud.Services.Tests
             // Assert
             Assert.AreEqual(HttpStatusCode.NotFound, responseStatus);
             Assert.IsNotNull(responseStatus);
+        }
+
+        public static string GenerateRandomEmail()
+        {
+            return string.Format("{0}@{1}.com", GenerateRandomAlphabetString(10), GenerateRandomAlphabetString(10));
+        }
+        public static string GenerateRandomAlphabetString(int length)
+        {
+            string allowedChars = "abcdefghijklmnopqrstuvwyxzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var rnd = SeedRandom();
+
+            char[] chars = new char[length];
+            for (int i = 0; i < length; i++)
+            {
+                chars[i] = allowedChars[rnd.Next(allowedChars.Length)];
+            }
+
+            return new string(chars);
+        }
+        private static Random SeedRandom()
+        {
+            return new Random(Guid.NewGuid().GetHashCode());
         }
     }
 }
