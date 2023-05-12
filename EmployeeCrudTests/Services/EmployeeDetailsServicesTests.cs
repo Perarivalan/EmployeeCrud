@@ -15,14 +15,22 @@ using Newtonsoft.Json;
 
 namespace EmployeeCrud.Services.Tests
 {
-    [TestClass()]
-    public class EmployeeDetailsAPITests
+    [TestClass]
+    public class EmployeeDetailsServicesTests
     {
-        [TestMethod()]
+        private Mock<IEmployeeDetailsServices>? _employeeDetailsServices; 
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            _employeeDetailsServices = new Mock<IEmployeeDetailsServices>();
+        }
+
+        [TestMethod]
         public async Task GetCallTest()
         {
             // Arrange
-            EmployeeDetailsAPI employeeDetails = new EmployeeDetailsAPI();
+            EmployeeDetailsServices employeeDetails = new EmployeeDetailsServices();
             // Act
             var response = await employeeDetails.GetCall("users");
             // Assert
@@ -33,7 +41,7 @@ namespace EmployeeCrud.Services.Tests
         public async Task PostCallTest()
         {
             // Arrange
-            EmployeeDetailsAPI employeeDetails = new EmployeeDetailsAPI();
+            EmployeeDetailsServices employeeDetails = new EmployeeDetailsServices();
             var mockEmail = GenerateRandomEmail();
             var Employee = new Employee { Id = 0, Name = "Testdata", Email = mockEmail, Gender = "male", Status = "active" };
             // Act
@@ -47,7 +55,7 @@ namespace EmployeeCrud.Services.Tests
         public async Task PutCallTest()
         {
             // Arrange
-            EmployeeDetailsAPI employeeDetails = new EmployeeDetailsAPI();
+            EmployeeDetailsServices employeeDetails = new EmployeeDetailsServices();
             var response = await employeeDetails.GetCall("users");
             var employee = JsonConvert.DeserializeObject<List<Employee>>(response);
             // Act
@@ -57,12 +65,12 @@ namespace EmployeeCrud.Services.Tests
             Assert.IsNotNull(response);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public async Task PostandPutCallNullTest()
         {
 
             // Arrange
-            EmployeeDetailsAPI employeeDetails = new EmployeeDetailsAPI();
+            EmployeeDetailsServices employeeDetails = new EmployeeDetailsServices();
             var Employee = new Mock<Employee>();
             // Act
             var response = await employeeDetails.PostandPutCall(Employee.Object);
@@ -75,7 +83,7 @@ namespace EmployeeCrud.Services.Tests
         public async Task DeleteCallTest()
         {
             // Arrange
-            EmployeeDetailsAPI employeeDetails = new EmployeeDetailsAPI();
+            EmployeeDetailsServices employeeDetails = new EmployeeDetailsServices();
             var response = await employeeDetails.GetCall("users");
             var employee = JsonConvert.DeserializeObject<List<Employee>>(response);
             // Act
@@ -85,11 +93,11 @@ namespace EmployeeCrud.Services.Tests
             Assert.IsNotNull(response);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public async Task DeleteCallNullTest()
         {
             // Arrange
-            EmployeeDetailsAPI employeeDetails = new EmployeeDetailsAPI();
+            EmployeeDetailsServices employeeDetails = new EmployeeDetailsServices();
             var Employee = new Mock<Employee>();
             // Act
             var responseStatus = await employeeDetails.DeleteCall(Employee.Object.Id);

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
@@ -26,17 +27,13 @@ namespace EmployeeCrud.Views
     /// <summary>
     /// Interaction logic for EmployeeCrud.xaml
     /// </summary>
-    public partial class EmployeeCrud : Window
+    public partial class EmployeeWindow : Window
     {
-        HttpClient client = new HttpClient();
-        public EmployeeCrud()
+        private readonly IEmployeeDetailsServices _employeeDetailsServices;
+        public EmployeeWindow(IEmployeeDetailsServices employeeDetailsServices)
         {
-            ApiConstants apiConstants = new ApiConstants(); 
-            client.BaseAddress = new Uri(apiConstants.GetApiUrl);
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiConstants.GetApiToken);
             InitializeComponent();
+            _employeeDetailsServices = employeeDetailsServices;
             this.GetEmployees();
         }
 
@@ -45,8 +42,7 @@ namespace EmployeeCrud.Views
             try
             {
                 txtMessage.Text = "";
-                EmployeeDetailsAPI employeeDetails = new EmployeeDetailsAPI();
-                var response = await employeeDetails.GetCall("users");
+                var response = await _employeeDetailsServices.GetCall("users");
                 var employee = JsonConvert.DeserializeObject<List<Employee>>(response);
                 dgEmployee.DataContext = employee;
             }
@@ -60,9 +56,7 @@ namespace EmployeeCrud.Views
         {
             try
             {
-
-                EmployeeDetailsAPI employeeDetails = new EmployeeDetailsAPI();
-                var response = await employeeDetails.PostandPutCall(employee);
+                var response = await _employeeDetailsServices.PostandPutCall(employee);
                 this.GetEmployees();
             }
             catch (Exception ex)
@@ -75,9 +69,7 @@ namespace EmployeeCrud.Views
         {
             try
             {
-
-                EmployeeDetailsAPI employeeDetails = new EmployeeDetailsAPI();
-                var response = await employeeDetails.PostandPutCall(employee);
+                var response = await _employeeDetailsServices.PostandPutCall(employee);
                 this.GetEmployees();
             }
             catch (Exception ex)
@@ -90,9 +82,7 @@ namespace EmployeeCrud.Views
         {
             try
             {
-
-                EmployeeDetailsAPI employeeDetails = new EmployeeDetailsAPI();
-                var response = await employeeDetails.DeleteCall(employeeId);
+                var response = await _employeeDetailsServices.DeleteCall(employeeId);
             }
             catch (Exception ex)
             {

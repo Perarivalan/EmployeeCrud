@@ -11,18 +11,21 @@ using System.Text.Json.Nodes;
 
 namespace EmployeeCrud.Services
 {
-    public class EmployeeDetailsAPI
+    public class EmployeeDetailsServices : IEmployeeDetailsServices
     {
+        HttpClient client = new HttpClient();
+        public EmployeeDetailsServices()
+        {
+            ApiConstants apiConstants = new ApiConstants();
+            client.BaseAddress = new Uri(apiConstants.GetApiUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiConstants.GetApiToken);
+        }
         public async Task<string> GetCall(string url)
         {
             try
             {
-                using HttpClient client = new HttpClient();
-                ApiConstants apiConstants = new ApiConstants();
-                client.BaseAddress = new Uri(apiConstants.GetApiUrl);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiConstants.GetApiToken);
-
                 var response = await client.GetStringAsync("users");
                 return response;
             }
@@ -36,11 +39,6 @@ namespace EmployeeCrud.Services
         {
             try
             {
-                using HttpClient client = new HttpClient();
-                ApiConstants apiConstants = new ApiConstants();
-                client.BaseAddress = new Uri(apiConstants.GetApiUrl);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiConstants.GetApiToken);
                 JsonObject requestParams = new JsonObject
                     {
                     { "name", employee.Name },
@@ -75,12 +73,6 @@ namespace EmployeeCrud.Services
 
         public async Task<HttpStatusCode> DeleteCall(int employeeId)
         {
-            HttpClient client = new HttpClient();
-            ApiConstants apiConstants = new ApiConstants();
-            client.BaseAddress = new Uri(apiConstants.GetApiUrl);
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiConstants.GetApiToken);
-
             HttpResponseMessage response = await client.DeleteAsync("users/" + employeeId);
             return response.StatusCode;
         }
